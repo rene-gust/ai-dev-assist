@@ -1,4 +1,4 @@
-package com.moshuk.aistorm;
+package com.oxidEsales.aIDevAssist;
 
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -10,16 +10,17 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowManager;
+import com.intellij.ui.JBColor;
 import org.jetbrains.annotations.NotNull;
 
 import java.awt.*;
-import java.util.HashMap;
 
 public class AIOptimizeAction extends AnAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent event) {
         Project project = event.getProject();
         Editor editor = event.getData(PlatformDataKeys.EDITOR);
+        assert editor != null;
         Document document = editor.getDocument();
         // Work off of the primary caret to get the selection info
         Caret primaryCaret = editor.getCaretModel().getPrimaryCaret();
@@ -43,7 +44,7 @@ public class AIOptimizeAction extends AnAction {
         final String finalResponse = response;
         MyToolWindowFactory myToolWindowFactory = MyToolWindowFactory.getInstance();
 
-        if(myToolWindowFactory.AItoolWindow == null)
+        if (myToolWindowFactory.AItoolWindow == null)
         {
             ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
 
@@ -53,8 +54,8 @@ public class AIOptimizeAction extends AnAction {
 
         }
 
-        myToolWindowFactory.appendToOutput(">>> " + query, Color.BLUE);
-        myToolWindowFactory.appendToOutput("Processed input: " + response, Color.BLACK);
+        myToolWindowFactory.appendToOutput(">>> " + query, JBColor.BLUE);
+        myToolWindowFactory.appendToOutput("Processed input: " + response, JBColor.BLACK);
 
         WriteCommandAction.runWriteCommandAction(project, () ->
                 document.replaceString(start, end, finalResponse)

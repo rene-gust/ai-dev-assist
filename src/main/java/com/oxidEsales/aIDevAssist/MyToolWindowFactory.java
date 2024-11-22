@@ -1,9 +1,10 @@
-package com.moshuk.aistorm;
+package com.oxidEsales.aIDevAssist;
 
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManagerListener;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
+import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.content.Content;
 import org.jetbrains.annotations.NotNull;
@@ -64,7 +65,7 @@ public class MyToolWindowFactory implements ToolWindowFactory, ProjectManagerLis
                     inputTextArea.setText("");
 
                     // Show the user input in the output area
-                    appendToOutput(">>> " + input, Color.BLUE);
+                    appendToOutput(">>> " + input, JBColor.BLUE);
 
                     // Do something with the user input
                     processInput(input);
@@ -132,7 +133,7 @@ public class MyToolWindowFactory implements ToolWindowFactory, ProjectManagerLis
             e.printStackTrace();
         }
 
-        appendToOutput("AI RESPONSE: " + response, Color.BLACK);
+        appendToOutput("AI RESPONSE: " + response, JBColor.BLACK);
     }
 
     public void appendToOutput(String text, Color color) {

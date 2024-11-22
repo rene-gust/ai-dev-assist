@@ -8,15 +8,9 @@
     <name>OXID-AI-Dev-Assist</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor email="support@yourcompany.com" url="https://www.yourcompany.com">YourCompany</vendor>
+    <vendor email="info@oxid.esales.com" url="https://www.oxid-esales.com/">OXID eSales AG</vendor>
 
-    <!-- Description of the plugin displayed on the Plugin Page and IDE Plugin Manager.
-         Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
-         Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
-    <description><![CDATA[
-    Enter short description for your plugin here.<br>
-    <em>most HTML tags may be used</em>
-  ]]></description>
+    <description><![CDATA[ OXID Development Plugin powered by AI  ]]></description>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
@@ -26,17 +20,21 @@
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
         <toolWindow id="AiStorm" secondary="true" icon="AllIcons.General.Modified" anchor="right"
-                    factoryClass="com.moshuk.aistorm.MyToolWindowFactory"/>
-        <applicationConfigurable parentId="tools" instance="com.moshuk.aistorm.AppSettingsConfigurable"
-                                 id="com.moshuk.aistorm.AppSettingsConfigurable"
+                    factoryClass="com.oxidEsales.aIDevAssist.MyToolWindowFactory"/>
+        <applicationConfigurable parentId="tools" instance="com.oxidEsales.aIDevAssist.AppSettingsConfigurable"
+                                 id="com.oxidEsales.aIDevAssist.AppSettingsConfigurable"
                                  displayName="OXID AI Dev Assist"/>
-        <applicationService serviceImplementation="com.moshuk.aistorm.AppSettingsState"/>
+        <applicationService serviceImplementation="com.oxidEsales.aIDevAssist.AppSettingsState"/>
     </extensions>
 
     <actions>
         <group id="MainGroup" text="OXID AI Dev Assist" popup="true">
-            <add-to-group group-id="EditorPopupMenu" anchor="last" />
-            <action id="com.moshuk.aistorm.AIOptimizeAction" class="com.moshuk.aistorm.AIOptimizeAction" text="optimize php"/>
+            <action id="com.oxidEsales.aIDevAssist.AIOptimizeAction" class="com.oxidEsales.aIDevAssist.AIOptimizeAction" text="Optimize Code">
+                <add-to-group group-id="EditorPopupMenu" anchor="last" />
+            </action>
+            <action id="com.oxidEsales.aIDevAssist.AIUnitTestAction" class="com.oxidEsales.aIDevAssist.AIUnitTestAction" text="Generate Unit Test">
+                <add-to-group group-id="ProjectViewPopupMenu"/>
+            </action>
         </group>
     </actions>
 </idea-plugin>

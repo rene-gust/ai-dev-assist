@@ -1,4 +1,4 @@
-package com.moshuk.aistorm;
+package com.oxidEsales.aIDevAssist;
 
 import com.intellij.ui.HyperlinkLabel;
 import com.intellij.ui.components.JBLabel;

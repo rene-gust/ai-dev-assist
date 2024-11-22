@@ -31,7 +31,7 @@
     <actions>
         <group id="MainGroup" text="AI Storm" popup="true">
             <add-to-group group-id="EditorPopupMenu" anchor="last" />
-            <action id="com.moshuk.aistorm.AIGenerateAction" class="com.example.oxidaidevassist.AIAction" text="Generate"/>
+            <action id="com.oxidEsales.aIDevAssist.AIGenerateAction" class="com.example.oxidaidevassist.AIAction" text="Generate"/>
         </group>
     </actions>
 </idea-plugin>

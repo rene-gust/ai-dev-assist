@@ -1,4 +1,4 @@
-package com.moshuk.aistorm;
+package com.oxidEsales.aIDevAssist;
 
 import com.intellij.openapi.options.Configurable;
 import org.jetbrains.annotations.Nls;

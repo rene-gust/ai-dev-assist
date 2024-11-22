@@ -1,4 +1,4 @@
-package com.moshuk.aistorm;
+package com.oxidEsales.aIDevAssist;
 
 import com.theokanning.openai.completion.chat.ChatCompletionRequest;
 import com.theokanning.openai.completion.chat.ChatMessage;
@@ -8,10 +8,11 @@ import com.theokanning.openai.service.OpenAiService;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 public class ChatGPTClient {
     public String query(String query) {
-        String apiKey = AppSettingsState.getInstance().getState().apiKey;
+        String apiKey = Objects.requireNonNull(AppSettingsState.getInstance().getState()).apiKey;
         OpenAiService service = new OpenAiService(apiKey);
         final List<ChatMessage> messages = new ArrayList<>();
         final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(), "You are a helpful oxid eshop developer assistant.");

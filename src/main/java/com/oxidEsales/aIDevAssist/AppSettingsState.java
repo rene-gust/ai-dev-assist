@@ -1,4 +1,4 @@
-package com.moshuk.aistorm;
+package com.oxidEsales.aIDevAssist;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -14,7 +14,7 @@ import org.jetbrains.annotations.Nullable;
  * these persistent application settings are stored.
  */
 @State(
-        name = "com.moshuk.aistorm.AppSettingsState",
+        name = "com.oxidEsales.aIDevAssist.AppSettingsState",
         storages = @Storage("OXID-AI-Dev-Assist.xml")
 )
 public class AppSettingsState implements PersistentStateComponent<AppSettingsState> {
