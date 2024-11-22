@@ -5,6 +5,7 @@ import com.theokanning.openai.completion.chat.ChatMessage;
 import com.theokanning.openai.completion.chat.ChatMessageRole;
 import com.theokanning.openai.service.OpenAiService;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.Objects;
 public class ChatGPTClient {
     public String query(String query) {
         String apiKey = Objects.requireNonNull(AppSettingsState.getInstance().getState()).apiKey;
-        OpenAiService service = new OpenAiService(apiKey);
+        OpenAiService service = new OpenAiService(apiKey, Duration.ofSeconds(30));
         final List<ChatMessage> messages = new ArrayList<>();
         final ChatMessage systemMessage = new ChatMessage(ChatMessageRole.SYSTEM.value(), "You are a helpful oxid eshop developer assistant.");
         final ChatMessage userMessage = new ChatMessage(ChatMessageRole.USER.value(), query);
@@ -24,6 +25,7 @@ public class ChatGPTClient {
                 .model("gpt-4o")
                 .messages(messages)
                 .n(1)
+                .temperature(0.3)
                 .maxTokens(4000)
                 .logitBias(new HashMap<>())
                 .build();
