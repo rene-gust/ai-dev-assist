@@ -10,7 +10,7 @@
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
     <vendor email="info@oxid.esales.com" url="https://www.oxid-esales.com/">OXID eSales AG</vendor>
 
-    <description><![CDATA[ OXID Development Plugin powered by AI  ]]></description>
+    <description><![CDATA[ OXID Development Plugin powered by AI, which supports oxid developers  ]]></description>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
@@ -19,7 +19,7 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow id="AiStorm" secondary="true" icon="AllIcons.General.Modified" anchor="right"
+        <toolWindow id="AIDevAssist" secondary="true" icon="AllIcons.General.Modified" anchor="right"
                     factoryClass="com.oxidEsales.aIDevAssist.MyToolWindowFactory"/>
         <applicationConfigurable parentId="tools" instance="com.oxidEsales.aIDevAssist.AppSettingsConfigurable"
                                  id="com.oxidEsales.aIDevAssist.AppSettingsConfigurable"
@@ -30,6 +30,12 @@
     <actions>
         <group id="MainGroup" text="OXID AI Dev Assist" popup="true">
             <action id="com.oxidEsales.aIDevAssist.AIOptimizeAction" class="com.oxidEsales.aIDevAssist.AIOptimizeAction" text="Optimize Code">
+                <add-to-group group-id="EditorPopupMenu" anchor="last" />
+            </action>
+            <action id="com.oxidEsales.aIDevAssist.AIReFormat120MaxAction" class="com.oxidEsales.aIDevAssist.AIReFormat120MaxAction" text="Reformat Max 120 Chars">
+                <add-to-group group-id="EditorPopupMenu" anchor="last" />
+            </action>
+            <action id="com.oxidEsales.aIDevAssist.AICustomPromptAction" class="com.oxidEsales.aIDevAssist.AICustomPromptAction" text="Custom AI Prompt">
                 <add-to-group group-id="EditorPopupMenu" anchor="last" />
             </action>
             <action id="com.oxidEsales.aIDevAssist.AIUnitTestAction" class="com.oxidEsales.aIDevAssist.AIUnitTestAction" text="Generate Unit Test">

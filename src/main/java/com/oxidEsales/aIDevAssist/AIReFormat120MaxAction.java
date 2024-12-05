@@ -11,7 +11,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.ui.JBColor;
 import org.jetbrains.annotations.NotNull;
 
-public class AIOptimizeAction extends AnAction {
+public class AIReFormat120MaxAction extends AnAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent event) {
         Project project = event.getProject();
@@ -28,7 +28,7 @@ public class AIOptimizeAction extends AnAction {
 
         ChatGPTClient client = new ChatGPTClient();
 
-        String query = "Fix this code. Provide only code: \n\n" + selectedText;
+        String query = "Reformat this code, so its max 120 chars long each line. Provide only code: \n\n" + selectedText;
         String response = "";
 
         myToolWindowFactory.showToolWindow(project);

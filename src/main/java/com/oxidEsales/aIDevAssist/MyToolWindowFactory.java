@@ -4,9 +4,11 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.project.ProjectManagerListener;
 import com.intellij.openapi.wm.ToolWindow;
 import com.intellij.openapi.wm.ToolWindowFactory;
+import com.intellij.openapi.wm.ToolWindowManager;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.components.JBScrollPane;
 import com.intellij.ui.content.Content;
+import com.oxidEsales.aIDevAssist.UI.LoadingPanel;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
@@ -26,8 +28,10 @@ public class MyToolWindowFactory implements ToolWindowFactory, ProjectManagerLis
 
     public ToolWindow AItoolWindow;
 
+    private LoadingPanel loadingPanel = null;
 
-  //  private MyToolWindowFactory() {}
+
+    //  private MyToolWindowFactory() {}
 
     public static MyToolWindowFactory getInstance() {
         if (instance == null) {
@@ -39,7 +43,12 @@ public class MyToolWindowFactory implements ToolWindowFactory, ProjectManagerLis
     @Override
     public void createToolWindowContent(@NotNull Project project, ToolWindow toolWindow) {
         // Create your tool window content here
-        JPanel content = new JPanel(new BorderLayout());
+        JPanel contentPanel = new JPanel(new BorderLayout());
+
+        this.loadingPanel = new LoadingPanel();
+        //this.loadingPanel.setVisible(false);
+        contentPanel.add(loadingPanel, BorderLayout.NORTH);
+
         // Create a text area for user input
         inputTextArea = new JTextArea();
         inputTextArea.setEditable(true);
@@ -78,49 +87,33 @@ public class MyToolWindowFactory implements ToolWindowFactory, ProjectManagerLis
         inputPanel.add(inputTextArea, BorderLayout.CENTER);
 
         // Add the input and output panels to the content panel
-        content.add(outputScrollPane, BorderLayout.CENTER);
-        content.add(inputPanel, BorderLayout.SOUTH);
+        contentPanel.add(outputScrollPane, BorderLayout.CENTER);
+        contentPanel.add(inputPanel, BorderLayout.SOUTH);
 
+        Content toolWindowContent = toolWindow.getContentManager().getFactory().createContent(
+                contentPanel,
+                "",
+                false
+        );
+        toolWindow.getContentManager().addContent(toolWindowContent);
 
-     //   String text = "Hello, world!";
-      //  JComponent panel = new JPanel(new BorderLayout());
-     //   panel.add(new JLabel(text), BorderLayout.CENTER);
-        Content myContent = toolWindow.getContentManager().getFactory().createContent(content, "", false);
-        toolWindow.getContentManager().addContent(myContent);
-
-/*
-        ContentFactory contentFactory = ContentFactory.SERVICE.getInstance();
-        Content myContent = contentFactory.createContent(content, "", false);
-        ContentManager contentManager = toolWindow.getContentManager();
-        contentManager.addContent(myContent);
-*/
-        // Set the content for your tool window
-    //    toolWindow.getContentManager().addContent(
-  //              ContentFactory.SERVICE.getInstance().createContent(content, "", false));
         AItoolWindow = toolWindow;
         instance = this;
     }
-/*
-    @Override
-    public void projectOpened(Project project) {
-        ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
 
-        if (AItoolWindow == null) {
-
-            AItoolWindow = toolWindowManager.registerToolWindow("AiStorm", true, ToolWindowAnchor.BOTTOM);
-
-         //   ToolWindow myToolWindow = toolWindowManager.getToolWindow("AiStorm");
-            this.createToolWindowContent(project, AItoolWindow);
-
-
-            }
-        this.showToolWindow();
-
-    }
-*/
-    public void showToolWindow() {
+    public void showToolWindow(Project project) {
         if (AItoolWindow != null) {
             AItoolWindow.show(null);
+        } else {
+            ToolWindowManager toolWindowManager = ToolWindowManager.getInstance(project);
+
+            ToolWindow toolWindow = toolWindowManager.getToolWindow("AIDevAssist");
+            if (toolWindow != null) {
+                this.createToolWindowContent(project, toolWindow);
+                toolWindow.show();
+            } else {
+                System.err.println("Tool window AIDevAssist not exists");
+            }
         }
     }
 
@@ -157,12 +150,21 @@ public class MyToolWindowFactory implements ToolWindowFactory, ProjectManagerLis
         {
             doc.insertString(doc.getLength(), "\n"+text+ "\n", null );
         }
-        catch(Exception e) { System.out.println(e); }
+        catch(Exception e) { e.printStackTrace(); }
 
 
 
         // Scroll to the bottom of the output area
         JScrollBar verticalScrollBar = outputScrollPane.getVerticalScrollBar();
         verticalScrollBar.setValue(verticalScrollBar.getMaximum());
+    }
+
+    /**
+     * @TODO this panel is not shown again id once set invisible
+     */
+    public void setLoadingVisible(boolean visible) {
+        if (this.loadingPanel != null) {
+            this.loadingPanel.setVisible(visible);
+        }
     }
 }

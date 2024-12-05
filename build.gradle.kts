@@ -4,8 +4,8 @@ plugins {
     id("org.jetbrains.intellij") version "1.17.4"
 }
 
-group = "com.example"
-version = "1.0-SNAPSHOT"
+group = "com.oxid-esales"
+version = "0.0.1"
 
 repositories {
     mavenCentral()
@@ -47,9 +47,9 @@ tasks {
 }
 
 dependencies {
-    implementation("org.json:json:20210307")
+    implementation("org.json:json:20240303")
     implementation("com.theokanning.openai-gpt3-java:api:0.18.2")
-    implementation("com.theokanning.openai-gpt3-java:service:0.18.2")
+    implementation("com.theokanning.openai-gpt3-java:service:0.18.2") // we are connecting to openai, maybe later to anthropicai and Google Gemini, we trust this sources
     implementation("com.theokanning.openai-gpt3-java:client:0.18.2")
     implementation("org.glassfish:javax.json:1.1.4")
 }

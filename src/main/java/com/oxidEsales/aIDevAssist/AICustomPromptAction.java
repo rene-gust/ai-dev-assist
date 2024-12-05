@@ -8,17 +8,17 @@ import com.intellij.openapi.editor.Caret;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
 import com.intellij.ui.JBColor;
 import org.jetbrains.annotations.NotNull;
 
-public class AIOptimizeAction extends AnAction {
+public class AICustomPromptAction extends AnAction {
     @Override
     public void actionPerformed(@NotNull AnActionEvent event) {
         Project project = event.getProject();
         Editor editor = event.getData(PlatformDataKeys.EDITOR);
         assert editor != null;
         Document document = editor.getDocument();
-        MyToolWindowFactory myToolWindowFactory = MyToolWindowFactory.getInstance();
         // Work off of the primary caret to get the selection info
         Caret primaryCaret = editor.getCaretModel().getPrimaryCaret();
         int start = primaryCaret.getSelectionStart();
@@ -26,22 +26,22 @@ public class AIOptimizeAction extends AnAction {
 
         String selectedText = editor.getSelectionModel().getSelectedText();
 
+        String customPrompt = Messages.showInputDialog("Enter custom prompt:", "Enter Custom Prompt:", null);
+
         ChatGPTClient client = new ChatGPTClient();
 
-        String query = "Fix this code. Provide only code: \n\n" + selectedText;
+        String query = customPrompt + "\n\n" + selectedText;
         String response = "";
-
-        myToolWindowFactory.showToolWindow(project);
-        myToolWindowFactory.setLoadingVisible(true);
-
         try {
             response = client.query(query);
             response = response.replaceFirst("```php\\s*", "").replaceFirst("\\s*```$", "");
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         final String finalResponse = response;
+        MyToolWindowFactory myToolWindowFactory = MyToolWindowFactory.getInstance();
 
         myToolWindowFactory.showToolWindow(project);
 
@@ -53,7 +53,5 @@ public class AIOptimizeAction extends AnAction {
         );
 
         primaryCaret.removeSelection();
-
-        myToolWindowFactory.setLoadingVisible(false);
     }
 }
